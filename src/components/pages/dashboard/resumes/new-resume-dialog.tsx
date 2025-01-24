@@ -1,13 +1,11 @@
 'use client';
 
 import { BaseDialogProps, Dialog } from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { FieldWrapper } from '@/components/ui/field-wrapper';
 import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+import { InputField } from '@/components/shared/input-field';
 
 const NewResumeSchema = z.object({
 	title: z
@@ -18,11 +16,7 @@ const NewResumeSchema = z.object({
 type NewResumeSchemaProps = z.infer<typeof NewResumeSchema>;
 
 export const NewResumeDialog = (props: BaseDialogProps) => {
-	const {
-		register,
-		handleSubmit,
-		formState: { errors },
-	} = useForm<NewResumeSchemaProps>({
+	const methods = useForm<NewResumeSchemaProps>({
 		resolver: zodResolver(NewResumeSchema),
 	});
 
@@ -36,31 +30,15 @@ export const NewResumeDialog = (props: BaseDialogProps) => {
 			title="Novo currículo"
 			description="Escolha um título pra começar"
 			content={
-				<form
-          onSubmit={handleSubmit(onSubmit)}
-          className='flex flex-col'
-        >
+				<FormProvider {...methods}>
+					<form onSubmit={methods.handleSubmit(onSubmit)} className="flex flex-col">
+						<InputField label="Título" title="title" />
 
-          <FieldWrapper label="Título" />
-          <Input
-            {...register('title')}
-            className={cn(
-              'border border-gray-300 focus:outline-none',
-              errors.title && 'border-red-500'
-            )}
-          />
-
-					{errors.title && (
-						<span className="text-sm text-red-500">{errors.title.message}</span>
-					)}
-
-					<Button 
-            type="submit"
-            className='w-max mt-6 ml-auto'
-          >
-            Criar
-          </Button>
-				</form>
+						<Button type="submit" className="w-max mt-6 ml-auto">
+							Criar
+						</Button>
+					</form>
+				</FormProvider>
 			}
 		/>
 	);

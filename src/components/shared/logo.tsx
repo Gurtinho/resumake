@@ -1,10 +1,14 @@
 import { cn } from "@/lib/utils"
 
-export const Logo = ({ className }: { className?: string }) => {
+interface ILogoProps {
+  className?: string
+}
+
+export const Logo = ({ className }: ILogoProps) => {
   return (
     <h1 className={cn(
       "text-2xl font-bold",
-      className,
+      className, // substitui as props com propriedade
     )}>ResuMake✏️</h1>
   )
 }
