@@ -1,5 +1,6 @@
 import { NavItems } from "@/components/pages/dashboard/nav-items";
 import { UserDropdown } from "@/components/pages/dashboard/user-dropdown";
+import { Logo } from "@/components/shared/logo";
 import { ThemeToggle } from "@/components/shared/theme-toggle";
 
 type DashboardLayoutProps = {
@@ -14,7 +15,7 @@ export default function DashboardLayout({
 		<div className="w-full h-screen overflow-hidden grid grid-cols-[300px,1fr]">
 			<aside className="w-full h-full flex flex-col items-center border-r border-muted">
         <div className="w-full p-6 border-b border-muted">
-          <h1 className="text-2xl font-bold">ResuMake✏️</h1>
+          <Logo />
         </div>
 
         <NavItems />
