@@ -6,12 +6,14 @@ import {
 	ResizablePanelGroup,
 } from '@/components/ui/resizable';
 
-import { InfosSidebar } from './infos-sidebar';
-import { ResumeContent } from './resume-content';
-import { StructureSidebar } from './structure-sidebar';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, FormProvider } from 'react-hook-form';
+
+import { InfosSidebar } from './infos-sidebar';
+import { ResumeContent } from './resume-content';
+import { StructureSidebar } from './structure-sidebar';
+import { validatePhone } from '@/lib/phone';
 
 const resumeSchema = z.object({
 	content: z.object({
@@ -24,7 +26,9 @@ const resumeSchema = z.object({
 			headLine: z.string(),
 			email: z.string().email().min(1, 'O email é obrigatório'),
 			website: z.string().url(),
-			phone: z.string(),
+			phone: z.string().refine(validatePhone, {
+				message: 'O número de telefone é inválido',
+			}),
 			location: z.string().min(1, 'A localização é obrigatória'),
 		}),
 	}),
@@ -33,8 +37,27 @@ const resumeSchema = z.object({
 type ResumeSchemaProps = z.infer<typeof resumeSchema>;
 
 export const ResumePage = () => {
+
+	const defaultValues: ResumeSchemaProps = {
+		content: {
+			image: {
+				url: '',
+				visible: true,
+			},
+			infos: {
+				fullName: '',
+				headLine: '',
+				email: '',
+				website: '',
+				phone: '',
+				location: '',
+			}
+		}
+	}
+
 	const methods = useForm<ResumeSchemaProps>({
 		resolver: zodResolver(resumeSchema),
+		defaultValues,
 	});
 
 	const onResumeSubmit = ({ content }: ResumeSchemaProps) => {

@@ -32,7 +32,7 @@ export const NewResumeDialog = (props: BaseDialogProps) => {
 			content={
 				<FormProvider {...methods}>
 					<form onSubmit={methods.handleSubmit(onSubmit)} className="flex flex-col">
-						<InputField label="Título" title="title" />
+						<InputField label="Título" title="title" placeholder="Projetos..." />
 
 						<Button type="submit" className="w-max mt-6 ml-auto">
 							Criar
