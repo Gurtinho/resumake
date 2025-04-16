@@ -8,14 +8,14 @@ import {
 } from "@/components/ui/dialog/primitive"
 
 export type BaseDialogProps = {
-  children: React.ReactNode
+  children?: React.ReactNode
   open?: boolean
   setOpen?: (open: boolean) => void
 }
 
 type IDialogProps = BaseDialogProps & {
   title: string
-  description: string
+  description?: string
   content: React.ReactNode
 }
 

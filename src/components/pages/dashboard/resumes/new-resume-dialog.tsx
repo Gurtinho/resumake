@@ -21,7 +21,7 @@ export const NewResumeDialog = (props: BaseDialogProps) => {
 	});
 
 	const onSubmit = (data: NewResumeSchemaProps) => {
-		console.log(data);
+		// console.log(data);
 	};
 
 	return (
